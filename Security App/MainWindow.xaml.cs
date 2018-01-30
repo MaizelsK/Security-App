@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace Security_App
 {
@@ -27,7 +28,11 @@ namespace Security_App
         {
             InitializeComponent();
 
-            employers = GetData();
+            try { employers = GetData(); }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show("Не найден файл с данными, будут созданы новые файлы!");
+            }
 
             if (employers == null)
             {
@@ -77,7 +82,7 @@ namespace Security_App
 
         private ObservableCollection<Employee> GetData()
         {
-            string data = System.IO.File.ReadAllText($@"..\Employers Data\{DateTime.Now.ToShortDateString()}.json");
+            string data = File.ReadAllText($@"..\Employers Data\{DateTime.Now.ToShortDateString()}.json");
 
             ObservableCollection<Employee> employersData = JsonConvert.DeserializeObject<ObservableCollection<Employee>>(data);
 
@@ -106,7 +111,7 @@ namespace Security_App
         {
             string data = JsonConvert.SerializeObject(employers);
 
-            System.IO.File.WriteAllText($@"..\Employers Data\{DateTime.Now.ToShortDateString()}.json", data);
+            File.WriteAllText($@"..\Employers Data\{DateTime.Now.ToShortDateString()}.json", data);
         }
 
         //Показ посещаемости
@@ -123,7 +128,7 @@ namespace Security_App
         {
             string data = JsonConvert.SerializeObject(employers);
 
-            System.IO.File.WriteAllText($@"..\Employers Data\{DateTime.Now.ToShortDateString()}.json", data);
+            File.WriteAllText($@"..\Employers Data\{DateTime.Now.ToShortDateString()}.json", data);
 
             checkWindow.Close();
         }
