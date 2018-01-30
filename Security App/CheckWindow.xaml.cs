@@ -30,6 +30,8 @@ namespace Security_App
             InitializeComponent();
 
             employeeCheckGrid.ItemsSource = employers;
+
+            datePicker.SelectedDate = DateTime.Today;
         }
 
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
