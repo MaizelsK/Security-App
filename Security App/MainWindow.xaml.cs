@@ -21,50 +21,67 @@ namespace Security_App
     {
         public ObservableCollection<Employee> employers;
         public Window checkWindow;
+
+
         public MainWindow()
         {
             InitializeComponent();
-            employers = new ObservableCollection<Employee>
+
+            employers = GetData();
+
+            if (employers == null)
             {
-                new Employee
+                employers = new ObservableCollection<Employee>
                 {
-                   Id = Guid.NewGuid(),
-                   FullName = "Петр Иванов",
-                   Position = "Менеджер",
-                },
-                new Employee
-                {
-                   Id = Guid.NewGuid(),
-                   FullName = "Маша Машовна",
-                   Position = "Бухгалтер",
-                },
-                new Employee
-                {
-                 Id = Guid.NewGuid(),
-                   FullName = "Артем Артемов",
-                   Position = "Директор",
-                },
-                new Employee
-                {
-                  Id = Guid.NewGuid(),
-                   FullName = "Миша Мишев",
-                   Position = "Программист",
-                },
-                new Employee
-                {
-                   Id = Guid.NewGuid(),
-                   FullName = "Григорий Петров",
-                   Position = "Программист",
-                },
-                new Employee
-                {
-                   Id = Guid.NewGuid(),
-                   FullName = "Роман Романов",
-                   Position = "Консультант",
-                },
-            };
+                    new Employee
+                    {
+                       Id = Guid.NewGuid(),
+                       FullName = "Петр Иванов",
+                       Position = "Менеджер",
+                    },
+                    new Employee
+                    {
+                       Id = Guid.NewGuid(),
+                       FullName = "Маша Машовна",
+                       Position = "Бухгалтер",
+                    },
+                    new Employee
+                    {
+                     Id = Guid.NewGuid(),
+                       FullName = "Артем Артемов",
+                       Position = "Директор",
+                    },
+                    new Employee
+                    {
+                      Id = Guid.NewGuid(),
+                       FullName = "Миша Мишев",
+                       Position = "Программист",
+                    },
+                    new Employee
+                    {
+                       Id = Guid.NewGuid(),
+                       FullName = "Григорий Петров",
+                       Position = "Программист",
+                    },
+                    new Employee
+                    {
+                       Id = Guid.NewGuid(),
+                       FullName = "Роман Романов",
+                       Position = "Консультант",
+                    },
+                };
+            }
 
             employeeDataGrid.ItemsSource = employers;
+        }
+
+        private ObservableCollection<Employee> GetData()
+        {
+            string data = System.IO.File.ReadAllText($@"..\Employers Data\{DateTime.Now.ToShortDateString()}.json");
+
+            ObservableCollection<Employee> employersData = JsonConvert.DeserializeObject<ObservableCollection<Employee>>(data);
+
+            return employersData;
         }
 
         //Добавление пользователся
@@ -100,6 +117,15 @@ namespace Security_App
                 checkWindow = new CheckWindow(this);
                 checkWindow.Show();
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            string data = JsonConvert.SerializeObject(employers);
+
+            System.IO.File.WriteAllText($@"..\Employers Data\{DateTime.Now.ToShortDateString()}.json", data);
+
+            checkWindow.Close();
         }
     }
 }
