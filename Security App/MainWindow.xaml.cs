@@ -31,7 +31,7 @@ namespace Security_App
             try { employers = GetData(); }
             catch (FileNotFoundException ex)
             {
-                MessageBox.Show("Не найден файл с данными, будут созданы новые файлы!");
+                MessageBox.Show("Не найден файл с данными, будут созданы новые данные!");
             }
 
             if (employers == null)
