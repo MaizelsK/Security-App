@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Security_App"
         mc:Ignorable="d"
-        Title="CheckWindow" Height="300" Width="310" WindowStyle="ToolWindow">
+        Title="Посещаемость" Height="300" Width="310" WindowStyle="None">
     <DockPanel>
-        <DatePicker Name="datePicker" DockPanel.Dock="Bottom" SelectedDateChanged="datePicker_SelectedDateChanged"/>
-        <DataGrid Name="employeeCheckGrid" IsReadOnly="False" CanUserAddRows="False" DockPanel.Dock="Top" ColumnWidth="*" AutoGenerateColumns="False">
+        <DatePicker Name="datePicker" DockPanel.Dock="Bottom" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+        <DataGrid Name="employeeCheckGrid" IsReadOnly="False" CanUserAddRows="False" DockPanel.Dock="Top" ColumnWidth="*" AutoGenerateColumns="False" RowEditEnding="EmployeeCheckGrid_RowEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="ФИО" Binding="{Binding Path=FullName}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Должность" Binding="{Binding Path=Position}" IsReadOnly="True"/>
-                <DataGridCheckBoxColumn x:Name="checkBox" Header="Посещение"/>
+                <DataGridCheckBoxColumn x:Name="checkBox" Header="Посещение" Binding="{Binding IsArrived, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

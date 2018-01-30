@@ -34,14 +34,25 @@ namespace Security_App
 
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            foreach(var employee in employers)
+            foreach (var employee in employers)
             {
-                foreach(var date in employee.Visits)
+                employee.IsArrived = employee.CheckVisit(datePicker.SelectedDate.Value);
+            }
+        }
+
+        private void EmployeeCheckGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            CheckBox checkBox = employeeCheckGrid.Columns[3].GetCellContent(employeeCheckGrid.SelectedItem) as CheckBox;
+
+            if (datePicker.SelectedDate != null)
+            {
+                if (checkBox.IsChecked == true)
                 {
-                    if (date.ToShortDateString().Equals(datePicker.SelectedDate.Value.ToShortDateString()))
-                    {
-                        //checkBox.
-                    }
+                    employers[employeeCheckGrid.SelectedIndex].Visits.Add(datePicker.SelectedDate.Value);
+                }
+                else
+                {
+                    employers[employeeCheckGrid.SelectedIndex].Visits.Remove(datePicker.SelectedDate.Value);
                 }
             }
         }

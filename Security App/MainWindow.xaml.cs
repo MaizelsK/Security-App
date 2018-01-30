@@ -24,7 +24,45 @@ namespace Security_App
         public MainWindow()
         {
             InitializeComponent();
-            employers = new ObservableCollection<Employee>();
+            employers = new ObservableCollection<Employee>
+            {
+                new Employee
+                {
+                   Id = Guid.NewGuid(),
+                   FullName = "Петр Иванов",
+                   Position = "Менеджер",
+                },
+                new Employee
+                {
+                   Id = Guid.NewGuid(),
+                   FullName = "Маша Машовна",
+                   Position = "Бухгалтер",
+                },
+                new Employee
+                {
+                 Id = Guid.NewGuid(),
+                   FullName = "Артем Артемов",
+                   Position = "Директор",
+                },
+                new Employee
+                {
+                  Id = Guid.NewGuid(),
+                   FullName = "Миша Мишев",
+                   Position = "Программист",
+                },
+                new Employee
+                {
+                   Id = Guid.NewGuid(),
+                   FullName = "Григорий Петров",
+                   Position = "Программист",
+                },
+                new Employee
+                {
+                   Id = Guid.NewGuid(),
+                   FullName = "Роман Романов",
+                   Position = "Консультант",
+                },
+            };
 
             employeeDataGrid.ItemsSource = employers;
         }
@@ -54,6 +92,7 @@ namespace Security_App
             System.IO.File.WriteAllText($@"..\Employers Data\{DateTime.Now.ToShortDateString()}.json", data);
         }
 
+        //Показ посещаемости
         private void CheckButton_Click(object sender, RoutedEventArgs e)
         {
             if (checkWindow == null)
